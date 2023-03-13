@@ -9,7 +9,7 @@
   <%= button_to "Destroy this trail", @trail, method: :delete %>
 </div>
 
-<%= render "trails/search_content" %>
+<%= render "trails/search_content", locals:{trail: @trail} %>
 <% if @results.present? %>
   <h3>Resultados da pesquisa para "<%= params[:query] %>"</h3>
   <%@results.each do |video| %>

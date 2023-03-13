@@ -3,6 +3,7 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   static targets = [ "query", "results" ];
+  static values = { trail: Number}
 
   connect() {
     if (!this.element.classList.contains("my-search-form")) {
@@ -10,16 +11,12 @@ export default class extends Controller {
       return;
     }
 
-    console.log("Hello, Stimulus!", this.element);
-    console.log(this.queryTarget.value)
-    console.log(this.resultsTarget)
+
   }
 
   search(event) {
     event.preventDefault();
-    console.log("caiu aqui");
-    console.log(this.queryTarget.value)
-    console.log(this.resultsTarget)
+
     if (this.hasQueryTarget && this.hasResultsTarget) {
       const query = this.queryTarget.value;
       fetch("/search", {
@@ -39,7 +36,12 @@ export default class extends Controller {
           let html = "";
           videos.forEach(video => {
             html += `
-              <div class="video" data-id="${video.id.videoId}">
+              <div class="video" data-controller="video-content"
+              data-video-content-trail-value="${this.trailValue}"
+             data-video-content-title-value="${video.snippet.title}"
+             data-video-content-description-value="${video.snippet.description}"
+             data-video-content-thumbnail-value="${video.snippet.thumbnails.medium.url}"
+              data-video-content-id-value="${video.id.videoId}">
                 <div class="thumbnail">
                   <img src="${video.snippet.thumbnails.medium.url}">
                 </div>
@@ -47,9 +49,11 @@ export default class extends Controller {
                   <h2>${video.snippet.title}</h2>
                   <p>${video.snippet.description}</p>
                 </div>
+                <button class="btn btn-sm btn-secondary" data-action="click->video-content#create">Add video</button>
               </div>
             `;
           });
+
 
           if (this.hasResultsTarget) {
             this.resultsTarget.insertAdjacentHTML('beforeend', html);

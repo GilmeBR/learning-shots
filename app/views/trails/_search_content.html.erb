@@ -1,5 +1,5 @@
 
-<div class = 'my-search-form' data-controller="youtube-search">
+<div class = 'my-search-form' data-controller="youtube-search" data-youtube-search-trail-value="<%= @trail.id %>">
 <%= form_with( html: {data:{ action: "submit->youtube-search#search"}, class: " d-flex mb-3"}) do %>
   <%= text_field_tag :query,
     params[:query],

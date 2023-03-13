@@ -7,5 +7,8 @@ import { application } from "./application"
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
 
+import VideoContentController from "./video_content_controller"
+application.register("video-content", VideoContentController)
+
 import YoutubeSearchController from "./youtube_search_controller"
 application.register("youtube-search", YoutubeSearchController)

@@ -18,5 +18,9 @@
     <strong>Category:</strong>
     <%= trail.category %>
   </p>
-
+<ul>
+<% trail.video_contents.each do |video| %>
+<li><%=video.title %> <%= link_to "see video","https://www.youtube.com/watch?v=#{video.video_id}" %>
+<% end %>
+</ul>
 </div>

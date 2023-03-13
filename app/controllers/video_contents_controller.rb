@@ -18,7 +18,6 @@ class VideoContentsController < ApplicationController
   def create
     @video_content = VideoContent.new(video_content_params)
     @video_content.trail = Trail.find(params[:trail_id])
-
     respond_to do |format|
       if @video_content.save
         format.html { redirect_to @video_content, notice: 'o conteudo do video foi criado com sucesso.' }
@@ -57,6 +56,6 @@ class VideoContentsController < ApplicationController
   end
 
   def video_content_params
-    params.require(:video_content).permit(:video_id, :title, :thumb_url, :trail_id)
+    params.require(:video_content).permit(:video_id, :title, :thumb_url, :trail_id, :description)
   end
 end
