@@ -8,6 +8,7 @@
 
   <%= button_to "Destroy this trail", @trail, method: :delete %>
 </div>
+
 <%= render "trails/search_content" %>
 <% if @results.present? %>
   <h3>Resultados da pesquisa para "<%= params[:query] %>"</h3>
@@ -15,4 +16,3 @@
   <%= render "trails/video", locals:{video: video} %>
   <%end %>
 <% end %>
-

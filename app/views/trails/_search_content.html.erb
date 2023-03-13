@@ -1,28 +1,27 @@
 
-<%= form_with html: {data: {controller: "youtube-search"}, class: "d-flex mb-3"} do |form| %>
-  <%= form.text_field :query,
+<div class = 'my-search-form' data-controller="youtube-search">
+<%= form_with( html: {data:{ action: "submit->youtube-search#search"}, class: " d-flex mb-3"}) do %>
+  <%= text_field_tag :query,
+    params[:query],
     class: "form-control",
     placeholder: "Search for Youtube Videos",
     data: { "youtube-search-target" => "query"}
   %>
-  <%= form.submit "Search!", data: { "action": "click->youtube-search#search" }, class: "btn btn-primary mr-3" %>
+  <%= submit_tag "Search!", class: "btn btn-primary mr-3" %>
 <% end %>
-
 <div data-youtube-search-target="results">
-  <% if @results.present? %>
-    <% @results.each do |result| %>
-      <div class="video" data-id="<%= result['id']['videoId'] %>">
-        <div class="thumbnail">
-          <img src="<%= result['snippet']['thumbnails']['medium']['url'] %>">
-        </div>
-        <div class="info">
-          <h2><%= result['snippet']['title'] %></h2>
-          <p><%= result['snippet']['description'] %></p>
-        </div>
-      </div>
-    <% end %>
-  <% else %>
-    <p>Nenhum resultado encontrado para '<%= @query %>'</p>
-  <% end %>
 </div>
-
+</div>
+<% if @results.present? %>
+  <ul>
+    <% @results.each do |result| %>
+      <li>
+        <a href="https://www.youtube.com/watch?v=<%= result['id']['videoId'] %>" target="_blank">
+          <%= result['snippet']['title'] %>
+        </a>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>Nenhum resultado encontrado para '<%= @query %>'</p>
+<% end %>

@@ -43,6 +43,7 @@ class TrailsController < ApplicationController
 
   def search
     @results = YoutubeService.new.search_videos(params[:query])
+  
   end
 
   private
