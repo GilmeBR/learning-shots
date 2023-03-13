@@ -3,10 +3,13 @@
 <%= render @trail %>
 
 <div>
-  <%= link_to "Edit this trail", edit_trail_path(@trail) %> |
-  <%= link_to "Back to trails", trails_path %>
 
-  <%= button_to "Destroy this trail", @trail, method: :delete %>
+  <%= link_to "Back to trails", trails_path %>
+  <% if policy(trail).edit? %>
+    <%= link_to "Edit this trail", edit_trail_path(@trail) %>
+    <%= button_to "Destroy this trail", @trail, method: :delete, data: {confirm: "Are you sure?"} %>
+  <% end %>
+
 </div>
 
 <%= render "trails/search_content", locals:{trail: @trail} %>

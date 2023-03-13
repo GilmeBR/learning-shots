@@ -1,19 +1,27 @@
 class TrailsController < ApplicationController
+  before_action :set_trail, only: %i[ show edit update destroy ]
+
   def index
-    @trails = current_user.trails.all
+    @trails = policy_scope(trail)
+    authorize @trails
   end
 
   def show
+    authorize @trail
     @trail = Trail.find(params[:id])
     @video_content = VideoContent.new
   end
 
   def new
     @trail = Trail.new
+    authorize @trail
+
   end
 
   def create
     @trail = Trail.new(trail_params)
+    @trail.user = current_user
+    authorize @trail
     if @trail.save
       redirect_to trails_path, notice: "Trail created successfully"
     else
@@ -23,9 +31,11 @@ class TrailsController < ApplicationController
 
   def edit
     @trail = Trail.find(params[:id])
+    authorize @trail
   end
 
   def update
+    authorize @trail
     @trail= Trail.find(params[:id])
     if @trail.update(trail_params)
       redirect_to trail_path(@trail), notice: "Trail updated successfully"
@@ -35,6 +45,7 @@ class TrailsController < ApplicationController
   end
 
   def destroy
+    authorize @trail
     @trail = Trail.find(params[:id])
     @trail.destroy
 
@@ -49,6 +60,6 @@ class TrailsController < ApplicationController
   private
 
   def trail_params
-    params.require(:trail).permit(:user_id, :title, :description, :category)
+    params.require(:trail).permit(:title, :description, :category)
   end
 end
