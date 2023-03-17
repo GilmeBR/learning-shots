@@ -1,7 +1,7 @@
 <div class="container text-center font-weight-bold">
  <div class="hero">
     <% if current_user.trails.any? %>
-      <h2><strong>Boas vindas <%= (current_user.first_name).capitalize %> <%= (current_user.last_name).capitalize %>.</strong></h2>
+      <h2><strong>Boas vindas <%= (current_user.first_name&.capitalize) %> <%= (current_user.last_name&.capitalize) %>.</strong></h2>
       <h2>Agora você pode criar sua próximo Trilha</h2>
       <%= link_to "Nova Trilha", new_trail_path, class: "btn btn-primary mb-3 botao-index mt-1" %>
       <h3>Ou aproveitar as Trilhas já existentes</h3>
